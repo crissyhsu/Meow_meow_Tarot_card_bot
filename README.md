@@ -34,7 +34,8 @@ python Tarot_bot.py
 
 ## 大概效果展示
 詢問頁面：
-![alt text](image.png)
+<img width="937" height="745" alt="image" src="https://github.com/user-attachments/assets/f1aeef80-9ba0-437f-9769-eb444c8536ba" />
+
 
 解牌結果顯示(因為是本地運作 通常要等一下)：
-![alt text](image-1.png)
+<img width="760" height="855" alt="image" src="https://github.com/user-attachments/assets/94d78c41-621a-4211-ad39-2c1e61e3f1a9" />
