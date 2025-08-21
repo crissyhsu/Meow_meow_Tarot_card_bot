@@ -15,6 +15,7 @@ pip install -r requirements.txt
     - 調好的模型：[喵喵解牌model](https://huggingface.co/xcr1005/tarot_try)
 
 ## 檔案結構
+```
 ├── README.md
 ├── requirements.txt
 ├── NLP_2.py                # 問題分類訓練腳本
@@ -24,6 +25,7 @@ pip install -r requirements.txt
 ├── tarot_card_gpt.json     # 塔羅牌資料庫
 ├── naive_bayes_model.pkl   # 訓練好的分類模型
 └── tfidf_vectorizer.pkl    # TF-IDF向量化器
+```
 
 ## 執行方式
 在終端機輸入：
@@ -34,7 +36,8 @@ python Tarot_bot.py
 
 ## 大概效果展示
 詢問頁面：
-![alt text](image.png)
+<img width="937" height="745" alt="image" src="https://github.com/user-attachments/assets/f1aeef80-9ba0-437f-9769-eb444c8536ba" />
+
 
 解牌結果顯示(因為是本地運作 通常要等一下)：
-![alt text](image-1.png)
+<img width="760" height="855" alt="image" src="https://github.com/user-attachments/assets/94d78c41-621a-4211-ad39-2c1e61e3f1a9" />
