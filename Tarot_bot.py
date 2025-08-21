@@ -15,7 +15,7 @@ generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 model = joblib.load("naive_bayes_model.pkl")
 vectorizer = joblib.load("tfidf_vectorizer.pkl")
 
-with open("tarot_card_gpt.json", "r", encoding="utf-8") as file:
+with open("tarot_card.json", "r", encoding="utf-8") as file:
     tarot_cards = json.load(file)
 
 
