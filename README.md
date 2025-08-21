@@ -15,6 +15,7 @@ pip install -r requirements.txt
     - 調好的模型：[喵喵解牌model](https://huggingface.co/xcr1005/tarot_try)
 
 ## 檔案結構
+```
 ├── README.md
 ├── requirements.txt
 ├── NLP_2.py                # 問題分類訓練腳本
@@ -24,6 +25,7 @@ pip install -r requirements.txt
 ├── tarot_card_gpt.json     # 塔羅牌資料庫
 ├── naive_bayes_model.pkl   # 訓練好的分類模型
 └── tfidf_vectorizer.pkl    # TF-IDF向量化器
+```
 
 ## 執行方式
 在終端機輸入：
