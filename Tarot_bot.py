@@ -7,19 +7,14 @@ from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer
 
 #載入在HuggingFace上已經自己微調好的模型
 model_name = "xcr1005/tarot_try"
-
-# 載入tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
-
-# 創建 `pipeline`
 generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
-# 載入模型與向量化器(訓練好的貝氏分類器)
+
 model = joblib.load("naive_bayes_model.pkl")
 vectorizer = joblib.load("tfidf_vectorizer.pkl")
 
-# 打開記塔羅牌資料的檔案(之後要加入prompt)
 with open("tarot_card_gpt.json", "r", encoding="utf-8") as file:
     tarot_cards = json.load(file)
 
@@ -30,7 +25,7 @@ def draw_three_tarot_cards():
     result = []
 
     for card in selected_cards:
-        position = random.choice(["正位", "逆位"])  # 隨機決定方向
+        position = random.choice(["正位", "逆位"])  #隨機決定方向
         meaning = card["upright_meaning"] if position == "正位" else card["reversed_meaning"]
 
         result.append({
@@ -43,11 +38,11 @@ def draw_three_tarot_cards():
 
 def check_type(str):
     new_question = str
-    # 進行斷詞
+    
     def jieba_cut(text):
         return " ".join(jieba.cut(text))
-    new_X = vectorizer.transform([jieba_cut(new_question)])  # 轉換為 TF-IDF 特徵
-    predicted_category = model.predict(new_X)  # 預測分類
+    new_X = vectorizer.transform([jieba_cut(new_question)])
+    predicted_category = model.predict(new_X)
     return predicted_category[0]
 
 def tarot_reading(question):
@@ -75,6 +70,7 @@ def tarot_reading(question):
     result += "本喵下線思考億下下...\n\n"
     
     try:
+        #用調好的模型產生答案
         output = generator(prompt, max_length=1200, pad_token_id=tokenizer.eos_token_id)
         interpretation = output[0]["generated_text"].replace(prompt, "").strip()
         result += interpretation
@@ -83,9 +79,8 @@ def tarot_reading(question):
     
     return result
 
-# 創建 Gradio 介面
 def create_gradio_interface():
-    # 自定義CSS樣式
+    #自定義CSS樣式
     custom_css = """
     .gradio-container {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -128,7 +123,6 @@ def create_gradio_interface():
         
         with gr.Row():
             with gr.Column(scale=1):
-                # 輸入區域
                 question_input = gr.Textbox(
                     label="🐾 請輸入你的問題",
                     placeholder="例如：我和心儀對象的愛情發展如何？",
@@ -142,7 +136,6 @@ def create_gradio_interface():
                     size="lg"
                 )
                 
-                # 使用範例
                 gr.Examples(
                     examples=[
                         ["我和暗戀對象有機會在一起嗎？"],
@@ -155,14 +148,12 @@ def create_gradio_interface():
                     label="💡 點擊試試這些問題"
                 )
         
-        # 輸出區域
         with gr.Row():
             output = gr.Markdown(
                 label="🐱 塔羅解讀結果",
                 elem_id="output-markdown"
             )
         
-        # 綁定事件
         submit_btn.click(
             fn=tarot_reading,
             inputs=question_input,
@@ -170,14 +161,12 @@ def create_gradio_interface():
             api_name="tarot"
         )
         
-        # 支援 Enter 鍵提交
         question_input.submit(
             fn=tarot_reading,
             inputs=question_input,
             outputs=output
         )
         
-        # 底部資訊
         gr.HTML("""
         <div style="text-align: center; padding: 20px; margin-top: 30px; 
                     background: rgba(255,255,255,0.1); border-radius: 10px;">
